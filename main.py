@@ -106,13 +106,23 @@ def open_xml_file():
 
     # statistick
     fField =[]
-    for f in Field:
-        for ff in f:
-            if ff != 'nan':
-                fff = float("{0:.12f}".format(float(ff) * 10000000))
+    for i in range(len(Field)):
+        for j in range(len(Field[i])):
+            if Field[i][j] == 'nan':
+                if Field[i][j] == Field[i][0]:  # if first
+                    fff = float("{0:.12f}".format(float(Field[i][1]) * 1)) * 2 - float(
+                        "{0:.12f}".format(float(Field[i][2]) * 1))
+                elif Field[i][j] == Field[i][-1]:  # if lasst
+                    fff = float("{0:.12f}".format(float(Field[i][-2]) * 1)) * 2 - float(
+                        "{0:.12f}".format(float(Field[i][-3]) * 1))
+                else:  # midle
+                    fff = (float("{0:.12f}".format(float(Field[i][j - 1]) * 1)) + float(
+                        "{0:.12f}".format(float(Field[i][j + 1]) * 1))) / 2
             else:
-                fff = 1270000000
+                fff = float("{0:.12f}".format(float(Field[i][j]) * 1))
             fField.append(fff)
+
+
     avgField = mean(fField)
     text.insert('end', '--> Avg Field = ' + str(avgField) + '\n')
 
@@ -203,7 +213,7 @@ def emu_mfc():
 
     ####
     # name of serial port
-    uart = 'COM11'
+    uart = 'COM4'
 
     #
     f_run = False
