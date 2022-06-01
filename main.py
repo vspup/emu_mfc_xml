@@ -789,7 +789,7 @@ def tmp_vsp():
 # open file button
 write_MAP_button = ttk.Button(
     root,
-    text='Write to map file',
+    text='Emulate MFC',
     command=emu_mfc,
     state=tk.DISABLED
 )
