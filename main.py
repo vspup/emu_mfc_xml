@@ -125,6 +125,12 @@ def open_xml_file():
     text.insert('end', '--> Standard Deviation [G] = ' + str((stdev(fField)) * k) + ' [37.46503267 Gauss]\n')
     print("Standard Deviation of the sample is % s " % (stdev(fField)))
 
+    val, idx = min((val, idx) for (idx, val) in enumerate(fField))
+    text.insert('end', '--> Min = ' + str(val * k) + '  on ' + str(idx) + '\n')
+    valMax, idxMax = max((valMax, idxMax) for (idxMax, valMax) in enumerate(fField))
+    text.insert('end', '--> Max = ' + str(valMax * k) + '  on ' + str(idxMax) + '\n')
+    text.insert('end', '--> Max[636] = ' + str(fField[636] * k) + '  Max[' + str(idxMax) + '] = '+ str(fField[idxMax]*k) + '\n')
+
     for i in range(NN):
         SF = ''
         SD = ''
