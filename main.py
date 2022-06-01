@@ -9,6 +9,9 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog as fd
 
+from statistics import mean
+from statistics import stdev
+
 # data of MFC tool
 NN = 24
 MM = 32
@@ -101,6 +104,26 @@ def open_xml_file():
     write_MAP_button['state'] = tk.NORMAL
     text.insert('end', '--> Can write\n')
 
+    # statistick
+    fField =[]
+    for f in Field:
+        for ff in f:
+            if ff != 'nan':
+                fff = float("{0:.12f}".format(float(ff) * 10000000))
+            else:
+                fff = 1270000000
+            fField.append(fff)
+    avgField = mean(fField)
+    text.insert('end', '--> Avg Field = ' + str(avgField) + '\n')
+
+    avgG = 30003.04056926
+    k = avgG/avgField
+    text.insert('end', '--> Avg Gaus = ' + str(avgG) + ': k = ' + str(k) + ': calc = ' + str(k*avgField) + '\n')
+    text.insert('end', '--> Avg Field [G] = ' + str(avgField*k) + ' [30003.04056926 Gauss]\n')
+    text.insert('end', '--> Min Field [G] = ' + str(min(fField)*k) + ' [29829.08171055 Gauss]\n')
+    text.insert('end', '--> Max Field [G] = ' + str(max(fField) * k) + ' [30011.58498117 Gauss]\n')
+    text.insert('end', '--> Standard Deviation [G] = ' + str((stdev(fField)) * k) + ' [37.46503267 Gauss]\n')
+    print("Standard Deviation of the sample is % s " % (stdev(fField)))
 
     for i in range(NN):
         SF = ''
